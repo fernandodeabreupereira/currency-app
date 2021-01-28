@@ -1,26 +1,34 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container grid-lg my-2 py-2">
+    <div class="card">
+      <div class="card-header">
+        <div class="h4">Todas as moedas</div>
+      </div>
+      <div class="card-body">
+        <ListQuotes :quotes="quotes" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { onMounted, reactive, toRefs } from "vue";
+import api from "@/services/api";
+import ListQuotes from "./components/ListQuotes";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
-</script>
+  name: "App",
+  components: { ListQuotes },
+  setup() {
+    const data = reactive({
+      quotes: {},
+    });
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+    onMounted(async () => {
+      const response = await api.all();
+      data.quotes = response.data;
+    });
+
+    return { ...toRefs(data) };
+  },
+};
+</script>
