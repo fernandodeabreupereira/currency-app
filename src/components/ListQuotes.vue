@@ -27,7 +27,7 @@
             {{ quote.pctChange }} %
           </span>
         </td>
-        <!-- <td>
+        <td>
           <a
             v-if="!listenQuotes.includes(key)"
             class="btn btn-primary btn-sm tooltip tooltip-left"
@@ -44,7 +44,7 @@
           >
             <i class="icon icon-minus"></i>
           </a>
-        </td> -->
+        </td>
       </tr>
     </tbody>
   </table>
@@ -52,6 +52,10 @@
 
 <script>
 export default {
-  props: { quotes: { type: Object, required: true } },
+  props: {
+    quotes: { type: Object, required: true },
+    listenQuotes: { type: Array, required: true },
+  },
+  emits: ["listen", "unlisten"],
 };
 </script>
